@@ -7,6 +7,16 @@ ENV PYTHONUNBUFFERED 1
 # Set the default workdir
 WORKDIR /usr/src/app
 
+# Install system dependencies (MySQL dev headers)
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    gcc \
+    default-libmysqlclient-dev \
+    build-essential \
+    libmariadb-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt .
 # install python dependencies
 RUN pip install --upgrade pip
